@@ -3,6 +3,8 @@
 ## Binaries
 The CLI application has been precompiled into the following binaries for each OS and architecture. These can also be found in Releases section on the right.
 
+**Reminder**: Downloading the binary will require ```chmod u+x most_active_cookie``` to turn the binary into an executable.
+
 ### Linux x86-64
     https://github.com/charlespnh/quantcast-cli/releases/download/v0.1.0-x86-64/most_active_cookie
 
