@@ -4,14 +4,13 @@ import (
 	"encoding/csv"
 	"io"
 	"strings"
-	"log"
 )
 
 func GetCookiesWithinTimestamp(reader *csv.Reader, date string) ([]string, error) {
 	// Read the header
 	_, err := reader.Read()
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	// Read the records
@@ -22,21 +21,19 @@ func GetCookiesWithinTimestamp(reader *csv.Reader, date string) ([]string, error
 			break
 		}
 		if err != nil {
-			return "", err
+			return nil, err
 		}
 
-		// Parse the record
-		recordParsed = strings.Split(record, " ")
-		cookie := recordParsed[0]
-		timestamp := recordParsed[1]
-
+		// Parse for values
+		cookie := record[0]
+		timestamp := record[1]
 		// Append the cookie if the timestamp contains the date of interest
-		if strings.Contains(timestamp, date){
+		if strings.Contains(timestamp, date) {
 			cookies = append(cookies, cookie)
 		}
 	}
 
-	return records, nil
+	return cookies, nil
 }
 
 func GetMostActiveCookies(records []string) []string {
@@ -52,14 +49,14 @@ func GetMostActiveCookies(records []string) []string {
 	var mostActiveCookies []string
 	for cookie, freq := range cookieFreq {
 		if freq == maxCount {
-			mostActiveCookie = append(mostActiveCookie, cookie)
+			mostActiveCookies = append(mostActiveCookies, cookie)
 		}
 	}
 
-	return mostActiveCookies, nil
+	return mostActiveCookies
 }
 
-func max(int a, int b) int {
+func max(a, b int) int {
 	if a > b {
 		return a
 	}

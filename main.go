@@ -1,18 +1,21 @@
 package main
 
 import (
-	"log"
+	"encoding/csv"
 	"os"
-	"flag"
+	// "flag"
+	"log"
+	"fmt"
 
-	mac "most_active_cookie"
+	flag "github.com/spf13/pflag"
 )
 
 func main() {
 	// Parse command line arguments
-	timestamp := flag.String("d", "", "Timestamp to filter by")
+	var date string
+	flag.StringVarP(&date, "date", "d", "1970-01-01", "Date to filter by")
 	flag.Parse()
-	
+
 	// Open the file
 	file, err := os.Open(flag.Arg(0))
 	if err != nil {
@@ -21,12 +24,13 @@ func main() {
 	defer file.Close()
 
 	// Parse the file
-	records, err := mac.GetCookiesWithinTimestamp(csv.NewReader(file), timestamp)
+	records, err := GetCookiesWithinTimestamp(csv.NewReader(file), date)
 	if err != nil {
 		log.Fatal(err)
 	}
-
 	// Get the most active cookies
-	mostActiveCookies := mac.GetMostActiveCookies(records)
-	log.Println(mostActiveCookies)
+	mostActiveCookies := GetMostActiveCookies(records)
+	for _, cookie := range mostActiveCookies {
+		fmt.Println(cookie)
+	}
 }
