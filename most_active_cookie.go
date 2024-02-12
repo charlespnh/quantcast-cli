@@ -2,20 +2,31 @@ package main
 
 import (
 	"encoding/csv"
+	"os"
 	"io"
 	"strings"
 )
 
 // Reads the CSV file and returns the cookies that were active on the given date
-func GetCookiesWithinDate(reader *csv.Reader, date string) ([]string, error) {
+func GetCookiesWithinDate(filename string, date string) ([]string, error) {
+	// Open the file
+	file, err := os.Open(filename)
+	defer file.Close()
+	if err != nil {
+		return nil, err
+	}
+
+	// Create a CSV reader
+	reader := csv.NewReader(file)
+
 	// Read the header
-	_, err := reader.Read()
+	_, err = reader.Read()
 	if err != nil {
 		return nil, err
 	}
 
 	// Read the records
-	var cookies []string
+	cookies := []string{}
 	for {
 		record, err := reader.Read()
 		if err == io.EOF {

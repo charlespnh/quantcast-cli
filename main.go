@@ -1,8 +1,6 @@
 package main
 
 import (
-	"encoding/csv"
-	"os"
 	"log"
 	"fmt"
 
@@ -17,15 +15,8 @@ func main() {
 
 	filename := flag.Arg(0)
 
-	// Open the file
-	file, err := os.Open(filename)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
-
 	// Parse the file
-	records, err := GetCookiesWithinDate(csv.NewReader(file), date)
+	records, err := GetCookiesWithinDate(filename, date)
 	if err != nil {
 		log.Fatal(err)
 	}

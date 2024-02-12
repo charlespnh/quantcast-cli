@@ -53,9 +53,36 @@ func TestCommandLineFlags(t *testing.T) {
 }
 
 func TestGetCookiesWithinDate(t *testing.T) {
+	t.Parallel()
+	date1 := "2018-12-09"
+	date2 := "2018-12-10"
+	expectedCookies1 := []string{"AtY0laUfhglK3lC7", "SAZuXPGUrfbcn5UA", "5UAVanZf6UtGyKVS", "AtY0laUfhglK3lC7"}
+	expectedCookies2 := []string{}
 
+	actualCookies, err := GetCookiesWithinDate("logs/cookie_log.csv", date1)
+	assert.NoError(t, err)
+	assert.Equal(t, expectedCookies1, actualCookies)
+
+	actualCookies, err = GetCookiesWithinDate("logs/cookie_log.csv", date2)
+	assert.NoError(t, err)
+	assert.Equal(t, expectedCookies2, actualCookies)
 }
 
 func TestGetMostActiveCookies(t *testing.T) {
-	
+	t.Parallel()
+	cookies1 := []string{"AtY0laUfhglK3lC7", "SAZuXPGUrfbcn5UA", "5UAVanZf6UtGyKVS", "AtY0laUfhglK3lC7"}
+	cookies2 := []string{"AtY0laUfhglK3lC7", "SAZuXPGUrfbcn5UA", "5UAVanZf6UtGyKVS"}
+	cookies3 := []string{"4sMM2LxV07bPJzwf"}
+	expectedMostActive1 := []string{"AtY0laUfhglK3lC7"}
+	expectedMostActive2 := []string{"AtY0laUfhglK3lC7", "SAZuXPGUrfbcn5UA", "5UAVanZf6UtGyKVS"}
+	expectedMostActive3 := []string{"4sMM2LxV07bPJzwf"}
+
+	actualMostActive := GetMostActiveCookies(cookies1)
+	assert.Equal(t, expectedMostActive1, actualMostActive)
+
+	actualMostActive = GetMostActiveCookies(cookies2)
+	assert.Equal(t, expectedMostActive2, actualMostActive)
+
+	actualMostActive = GetMostActiveCookies(cookies3)
+	assert.Equal(t, expectedMostActive3, actualMostActive)
 }
