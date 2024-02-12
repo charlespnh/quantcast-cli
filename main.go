@@ -22,6 +22,9 @@ func main() {
 
 	// Parse the file
 	records, err := mac.GetCookiesWithinTimestamp(csv.NewReader(file), timestamp)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	// Get the most active cookies
 	cookie, err := mac.GetMostActiveCookies(records)
