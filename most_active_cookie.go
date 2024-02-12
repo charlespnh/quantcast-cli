@@ -6,7 +6,8 @@ import (
 	"strings"
 )
 
-func GetCookiesWithinTimestamp(reader *csv.Reader, date string) ([]string, error) {
+// Reads the CSV file and returns the cookies that were active on the given date
+func GetCookiesWithinDate(reader *csv.Reader, date string) ([]string, error) {
 	// Read the header
 	_, err := reader.Read()
 	if err != nil {
@@ -36,6 +37,7 @@ func GetCookiesWithinTimestamp(reader *csv.Reader, date string) ([]string, error
 	return cookies, nil
 }
 
+// Returns the most active cookies
 func GetMostActiveCookies(records []string) []string {
 	// Count the occurrences of each cookie
 	cookieFreq := make(map[string]int)
@@ -56,6 +58,7 @@ func GetMostActiveCookies(records []string) []string {
 	return mostActiveCookies
 }
 
+// Find the maximum of two integers
 func max(a, b int) int {
 	if a > b {
 		return a

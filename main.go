@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/csv"
 	"os"
-	// "flag"
 	"log"
 	"fmt"
 
@@ -16,18 +15,21 @@ func main() {
 	flag.StringVarP(&date, "date", "d", "1970-01-01", "Date to filter by")
 	flag.Parse()
 
+	filename := flag.Arg(0)
+
 	// Open the file
-	file, err := os.Open(flag.Arg(0))
+	file, err := os.Open(filename)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer file.Close()
 
 	// Parse the file
-	records, err := GetCookiesWithinTimestamp(csv.NewReader(file), date)
+	records, err := GetCookiesWithinDate(csv.NewReader(file), date)
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	// Get the most active cookies
 	mostActiveCookies := GetMostActiveCookies(records)
 	for _, cookie := range mostActiveCookies {
