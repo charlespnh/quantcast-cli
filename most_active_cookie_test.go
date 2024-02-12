@@ -9,6 +9,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+// Test opening the CSV file
 func TestOpenCSVFile(t *testing.T) {
 	t.Parallel()
 	validFilename := "cookie_log.csv"
@@ -23,6 +24,7 @@ func TestOpenCSVFile(t *testing.T) {
 	file.Close()
 }
 
+// Test parsing command line arguments/flags
 func TestCommandLineFlags(t *testing.T) {
 	t.Parallel()
 	validArgs := []string{"cookie_log.csv", 
@@ -47,6 +49,7 @@ func TestCommandLineFlags(t *testing.T) {
 	assert.Error(t, err)
 }
 
+// Test reading the CSV file and getting the cookies within the specified date
 func TestGetCookiesWithinDate(t *testing.T) {
 	t.Parallel()
 	date1 := "2018-12-09"
@@ -63,6 +66,7 @@ func TestGetCookiesWithinDate(t *testing.T) {
 	assert.Equal(t, expectedCookies2, actualCookies)
 }
 
+// Test getting the most active cookies
 func TestGetMostActiveCookies(t *testing.T) {
 	t.Parallel()
 	cookies1 := []string{"AtY0laUfhglK3lC7", "SAZuXPGUrfbcn5UA", "5UAVanZf6UtGyKVS", "AtY0laUfhglK3lC7"}
