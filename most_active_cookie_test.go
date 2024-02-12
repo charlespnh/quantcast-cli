@@ -11,9 +11,8 @@ import (
 
 func TestOpenCSVFile(t *testing.T) {
 	t.Parallel()
-	validFilename := "logs/cookie_log.csv"
-	invalidFilename := "cookie_log_invalid.csv"
-	invalidFilename2 := "logs/cookie_log.json"
+	validFilename := "cookie_log.csv"
+	invalidFilename := "cookie_log_invalid.txt"
 
 	file, err := os.Open(validFilename)
 	assert.NoError(t, err)
@@ -22,18 +21,14 @@ func TestOpenCSVFile(t *testing.T) {
 	file, err = os.Open(invalidFilename)
 	assert.Error(t, err)
 	file.Close()
-
-	file, err = os.Open(invalidFilename2)
-	assert.Error(t, err)
-	file.Close()
 }
 
 func TestCommandLineFlags(t *testing.T) {
 	t.Parallel()
-	validArgs := []string{"logs/cookie_log.csv", 
+	validArgs := []string{"cookie_log.csv", 
 						  "-d", "2018-12-07"}
-	validArgs2 := []string{"logs/cookie_log.csv"}
-	invalidArgs := []string{"logs/cookie_log.csv", "-d"}
+	validArgs2 := []string{"cookie_log.csv"}
+	invalidArgs := []string{"cookie_log.csv", "-d"}
 
 	f := flag.NewFlagSet("test", flag.ContinueOnError)
 	date := f.StringP("date", "d", "1970-01-01", "Date value 1")
@@ -59,11 +54,11 @@ func TestGetCookiesWithinDate(t *testing.T) {
 	expectedCookies1 := []string{"AtY0laUfhglK3lC7", "SAZuXPGUrfbcn5UA", "5UAVanZf6UtGyKVS", "AtY0laUfhglK3lC7"}
 	expectedCookies2 := []string{}
 
-	actualCookies, err := GetCookiesWithinDate("logs/cookie_log.csv", date1)
+	actualCookies, err := GetCookiesWithinDate("cookie_log.csv", date1)
 	assert.NoError(t, err)
 	assert.Equal(t, expectedCookies1, actualCookies)
 
-	actualCookies, err = GetCookiesWithinDate("logs/cookie_log.csv", date2)
+	actualCookies, err = GetCookiesWithinDate("cookie_log.csv", date2)
 	assert.NoError(t, err)
 	assert.Equal(t, expectedCookies2, actualCookies)
 }
