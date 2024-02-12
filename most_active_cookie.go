@@ -39,7 +39,29 @@ func GetCookiesWithinTimestamp(reader *csv.Reader, date string) ([]string, error
 	return records, nil
 }
 
-func GetMostActiveCookies(records []string) ([]string, error) {
+func GetMostActiveCookies(records []string) []string {
+	// Count the occurrences of each cookie
+	cookieFreq := make(map[string]int)
+	maxCount := 0
+	for _, cookie := range records {
+		cookieFreq[cookie]++
+		maxCount = max(maxCount, cookieFreq[cookie])
+	}
 
-	return records, nil
+	// Find the most active cookie
+	var mostActiveCookies []string
+	for cookie, freq := range cookieFreq {
+		if freq == maxCount {
+			mostActiveCookie = append(mostActiveCookie, cookie)
+		}
+	}
+
+	return mostActiveCookies, nil
+}
+
+func max(int a, int b) int {
+	if a > b {
+		return a
+	}
+	return b
 }

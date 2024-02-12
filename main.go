@@ -27,9 +27,6 @@ func main() {
 	}
 
 	// Get the most active cookies
-	cookie, err := mac.GetMostActiveCookies(records)
-	if err != nil {
-		log.Fatal(err)
-	}
-	log.Println(cookie)
+	mostActiveCookies := mac.GetMostActiveCookies(records)
+	log.Println(mostActiveCookies)
 }
